@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './index.css';
+import styles from './index.module.scss';
 
 /**
  * Primary UI component for user interaction
@@ -10,7 +10,7 @@ export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      className={`${styles['storybook-button']} ${styles[`storybook-button--${size}`]} ${styles[`${mode}`]}`}
       style={backgroundColor && { backgroundColor }}
       {...props}
     >

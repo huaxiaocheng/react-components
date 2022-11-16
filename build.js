@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+
 const path = require("path")
 const fs = require("fs")
 
@@ -29,11 +31,33 @@ const commonConfig = {
         loader: "babel-loader",
       },
       {
-        test: /\.css$/,
-        use: ["css-loader"],
+        test: /\.s[ac]ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                mode: "local",
+                auto: true,
+                exportGlobals: true,
+                getLocalIdent: (context, localIdentName, localName) => {
+                  return `tc-${localName}`
+                }
+              }
+            }
+          },
+          "sass-loader"
+        ],
       }
     ]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name]/index.css",
+    })
+  ],
+  target: ["web", "es5"]
 }
 
 const componentDir = "src/components"
